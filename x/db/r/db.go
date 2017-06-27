@@ -11,7 +11,7 @@ type RethinkDB struct {
 }
 
 func NewRethinkDB(address string, dbName string, tag string) *RethinkDB {
-	var session, err = r.Connect(r.ConnectOpts{Address: address, Addresses: []string{"103.1.209.56:28015"}})
+	var session, err = r.Connect(r.ConnectOpts{Address: address})
 	if err != nil {
 		glog.Fatal(err)
 	}
