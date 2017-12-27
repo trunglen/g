@@ -11,20 +11,26 @@ type FacebookAuth struct {
 }
 
 func (f FacebookAuth) Authenticated() error {
-	req, _ := http.NewRequest("GET", "https://graph.facebook.com/v2.6/me", nil)
-	req.URL.Query().Add("access_token", f.Token)
+	req, _ := http.NewRequest("GET", "https://graph.facebook.com/v2.6/me?access_token="+f.Token, nil)
 	var c = http.Client{}
 	var resp, err = c.Do(req)
 	if err != nil {
 		return err
 	}
 	var result = struct {
-		ID   string `json:"id"`
-		Name string `json:"id"`
+		ID    string `json:"id"`
+		Name  string `json:"name"`
+		Error *struct {
+			Message string `json:"message"`
+			Code    string `json:"code"`
+		} `json:"error"`
 	}{}
 	err = json.NewDecoder(resp.Body).Decode(&result)
 	if err != nil {
-		return errors.New("Access token not found")
+		return err
+	}
+	if result.Error != nil {
+		return errors.New(result.Error.Message)
 	}
 	return nil
 }

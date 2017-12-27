@@ -9,6 +9,6 @@ type Authentication struct {
 	Token string
 }
 
-func Authenticate(auth Auth) {
-	auth.Authenticated()
+func Authenticate(auth Auth) error {
+	return auth.Authenticated()
 }
