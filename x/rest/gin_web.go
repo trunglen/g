@@ -24,6 +24,14 @@ func (r *JsonRender) SendData(ctx *gin.Context, data interface{}) {
 	})
 }
 
+func (r *JsonRender) SendDataCount(ctx *gin.Context, data interface{}, count int) {
+	ctx.JSON(STATUS_OK, map[string]interface{}{
+		"data":   data,
+		"count":  count,
+		"status": "success",
+	})
+}
+
 func (r *JsonRender) SendArrayData(ctx *gin.Context, data interface{}) {
 	if data == nil {
 		ctx.JSON(STATUS_OK, map[string]interface{}{
