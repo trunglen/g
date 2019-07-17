@@ -14,7 +14,7 @@ func (r *JsonRender) GetUserID(ctx *gin.Context) string {
 	if exist {
 		return userID.(string)
 	}
-	return ""
+	return ctx.Query("user_id")
 }
 
 func (r *JsonRender) SendData(ctx *gin.Context, data interface{}) {
