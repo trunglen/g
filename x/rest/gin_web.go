@@ -1,12 +1,20 @@
 package rest
 
 import (
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
 
 const STATUS_OK = 200
 
 type JsonRender struct {
+}
+
+func (r *JsonRender) GetTimeDuration(ctx *gin.Context) (int, int) {
+	var start, _ = strconv.Atoi(ctx.Query("start"))
+	var end, _ = strconv.Atoi(ctx.Query("end"))
+	return start, end
 }
 
 func (r *JsonRender) GetUserID(ctx *gin.Context) string {
