@@ -2,6 +2,7 @@ package rest
 
 import (
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -59,4 +60,16 @@ func (r *JsonRender) Success(ctx *gin.Context) {
 		"data":   nil,
 		"status": "success",
 	})
+}
+
+const bearerHeader = "Bearer "
+const accessToken = "access_token"
+
+func GetToken(ctx *gin.Context) string {
+	var r = ctx.Request
+	var authHeader = r.Header.Get("Authorization")
+	if strings.HasPrefix(authHeader, bearerHeader) {
+		return strings.TrimPrefix(authHeader, bearerHeader)
+	}
+	return r.URL.Query().Get(accessToken)
 }
